@@ -1,10 +1,9 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Analysis of two truths and one lie"
+subtitle: "Positive relationship between certainty and guessing correctly"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Rohan Alexander
+thanks: "Code and data are available at: https://github.com/RohanAlexander/two_truths_and_one_lie."
 date: today
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
@@ -20,6 +19,10 @@ bibliography: references.bib
 
 library(tidyverse)
 library(palmerpenguins)
+library(arrow)
+
+analysis_data <- 
+  read_parquet(here::here("data/analysis_data/analysis_data.parquet"))
 ```
 
 
@@ -37,16 +40,16 @@ Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
 ```{r}
 #| label: fig-bills
-#| fig-cap: Bills of penguins
+#| fig-cap: Relationship between how certain a guess was and whether the guess was correct. There is a positive relationship between these two variables.
 #| echo: false
+#| warning: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
+ggplot(analysis_data, aes(x = certainty, y = guessed_correct)) +
+  geom_jitter(height = 0.1, width = 0.1) +
+  geom_smooth(color = "black", se = TRUE, linetype = "dashed") +
   theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+  labs(x = "How certain was the guess?",
+       y = "Was the guess correct?")
 ```
 
 Talk more about it.
@@ -170,7 +173,7 @@ In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. 
 In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: false
 #| message: false
 #| warning: false
