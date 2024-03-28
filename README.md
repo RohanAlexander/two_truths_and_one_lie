@@ -4,6 +4,10 @@
 
 This repo provides analysis of an experiment designed to see if there is any relationship between the certainty of a guess, and whether it was right. 
 
+## Obtaining raw data
+
+The data need to be downloaded from the Google Sheet that collects the responses. This is done manually and then moved to `data/raw_data/`.
+
 
 ## File Structure
 
